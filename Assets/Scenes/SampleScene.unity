@@ -136,7 +136,9 @@ GameObject:
   - component: {fileID: 176419511}
   - component: {fileID: 176419510}
   - component: {fileID: 176419515}
-  m_Layer: 0
+  - component: {fileID: 176419517}
+  - component: {fileID: 176419516}
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,6 +188,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9775503736fd43428221f4394723f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movSpeed: 5
+  JumpPower: 80
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  cameraContainer: {fileID: 1879354030}
+  playerCamera: {fileID: 963194227}
+  minXLook: -65
+  maxXLook: 65
+  minFOV: 30
+  maxFOV: 90
+  lookSensitivity: 0.1
+  zoomSensitivity: 0.1
 --- !u!114 &176419514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,7 +242,7 @@ MonoBehaviour:
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 963194227}
 --- !u!114 &176419515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +255,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65345ad788f85894899b5012fbed25c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!54 &176419516
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176419508}
+  serializedVersion: 4
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!136 &176419517
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 176419508}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2.0108917
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.0038005114, z: 0}
 --- !u!1 &652733891
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +316,7 @@ GameObject:
   - component: {fileID: 652733892}
   - component: {fileID: 652733894}
   - component: {fileID: 652733893}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +493,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -518,7 +583,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1879354030}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CameraContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
