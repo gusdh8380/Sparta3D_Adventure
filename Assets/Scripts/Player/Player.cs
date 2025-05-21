@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     public PlayerController controller;
     public PlayerCondition condition;
 
-
-    public Action<ItemData> addItem;
+    public ItemData itemData;
+    public Action addItem;
 
     public Transform dropPosition;
 
@@ -18,10 +18,6 @@ public class Player : MonoBehaviour
         PlayerManager.Instance.Player = this;
         controller = GetComponent<PlayerController>();
         condition = GetComponent<PlayerCondition>();
-    }
-    public void AddItem(ItemData data)
-    {
-        addItem?.Invoke(data);
     }
 
 }
