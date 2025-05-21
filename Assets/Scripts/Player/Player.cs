@@ -5,13 +5,13 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public PlayerController controller;
-    public PlayerStat stat;
+    public PlayerCondition condition;
 
     private void Awake()
     {
         PlayerManager.Instance.Player = this;
         controller = GetComponent<PlayerController>();
-        stat = GetComponent<PlayerStat>();
+        condition = GetComponent<PlayerCondition>();
     }
 
 }
