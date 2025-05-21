@@ -25,6 +25,7 @@ public class ItemSlot : MonoBehaviour
         {
             itemData = data;
             stackCount += 1;     // 이미 Clear 후 stackCount는 0이므로 +1
+            iconImage.sprite = data.icon;
             iconImage.enabled = true;
             countText.enabled = true;
             countText.text = stackCount.ToString();
@@ -38,17 +39,11 @@ public class ItemSlot : MonoBehaviour
         countText.enabled = true;
         countText.text = stackCount.ToString();
 
-        // overlay, 쿨다운 플래그 초기화
-        cooldownOverlay.enabled = false;
-        isOnCooldown = false;
     }
     public void AddStack(int a)
     {
         stackCount += a;
-        countText.text = stackCount.ToString();
-
-        cooldownOverlay.enabled = false;
-       
+        countText.text = stackCount.ToString();   
     }
 
     // 슬롯 사용 시
@@ -61,13 +56,6 @@ public class ItemSlot : MonoBehaviour
                 action.Execute(PlayerManager.Instance.Player);
            
             StartCoroutine(CooldownCoroutine(itemData.coolTime));
-
-            // 스택 처리
-            stackCount--;
-            if (stackCount <= 0) Clear();
-            else countText.text = stackCount.ToString();
-          
-
         }
         else
         {
@@ -79,6 +67,8 @@ public class ItemSlot : MonoBehaviour
     {
         isOnCooldown = true;
         cooldownOverlay.enabled = true;
+        stackCount -= 1;
+        countText.text = stackCount.ToString();
 
         // Overlay 세팅: FillMethod = Vertical, Origin = Bottom
         cooldownOverlay.type = Image.Type.Filled;
