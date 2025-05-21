@@ -1,7 +1,8 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -155,5 +156,16 @@ public class PlayerController : MonoBehaviour
         bool unlocked = (Cursor.lockState == CursorLockMode.None);
         Cursor.lockState = unlocked ? CursorLockMode.Locked : CursorLockMode.None;
         canLook = unlocked;
+    }
+
+    public void ApplySpeedUp(float a,float d)
+    {
+        StartCoroutine(SpeedUpCoroutine(a,d));
+    }
+    private IEnumerator SpeedUpCoroutine(float a,float d)
+    {
+        movSpeed += a;
+        yield return  new WaitForSeconds(d);
+        movSpeed -= a;
     }
 }
