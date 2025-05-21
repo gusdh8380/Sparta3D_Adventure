@@ -16,6 +16,8 @@ public class CampFireHeal : MonoBehaviour
 
     List<PlayerCondition> conditions = new List<PlayerCondition>();
 
+    
+
     private void Update()
     {
         if (healEnabled)

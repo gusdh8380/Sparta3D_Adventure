@@ -17,6 +17,7 @@ public class CampFire : MonoBehaviour
     private void Start()
     {
         InvokeRepeating("DealDamage", 0, damageRate);
+        CampFireHeal.healEnabled = false;
     }
     void DealDamage()
     {
