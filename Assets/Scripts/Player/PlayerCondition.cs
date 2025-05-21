@@ -28,4 +28,6 @@ public class PlayerCondition : MonoBehaviour, IDamageable
         health.Subtract(a);
         onTakeDamage?.Invoke();
     }
+
+   
 }
