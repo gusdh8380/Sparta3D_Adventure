@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InventoryManager : MonoBehaviour
+public class SlotsUI : MonoBehaviour
 {
     [Header("UI 슬롯 4개를 할당")]
     public List<ItemSlot> slots;
 
-    void Start()
+    void OnEnable()
     {
-        // 플레이어가 아이템을 획득했을 때 호출
-        PlayerManager.Instance.Player.addItem += OnItemAdded;
+        if (PlayerManager.Instance?.Player != null)
+            PlayerManager.Instance.Player.addItem += OnItemAdded;
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
-        PlayerManager.Instance.Player.addItem -= OnItemAdded;
+        if (PlayerManager.Instance?.Player != null)
+            PlayerManager.Instance.Player.addItem -= OnItemAdded;
     }
 
     // 아이템 획득 시

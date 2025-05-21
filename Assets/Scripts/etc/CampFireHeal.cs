@@ -39,6 +39,8 @@ public class CampFireHeal : MonoBehaviour
         {
             conditions.Add(p);
         }
+        healEnabled = true;
+       
     }
 
     private void OnTriggerExit(Collider other)
@@ -47,6 +49,7 @@ public class CampFireHeal : MonoBehaviour
         {
             conditions.Remove(p);
         }
+        healEnabled=false;
     }
 
 
