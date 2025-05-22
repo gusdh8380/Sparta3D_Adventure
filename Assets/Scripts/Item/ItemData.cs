@@ -9,10 +9,11 @@ public enum ItemType
     Equipable,
     Consumable
 }
-
-
-
-
+public enum EquipSlotType
+{
+    Head,
+    Hand
+}
 [CreateAssetMenu(fileName = "Item", menuName = "New Item")]
 public class ItemData : ScriptableObject
 {
@@ -37,7 +38,10 @@ public class ItemData : ScriptableObject
 
     [Header("Equip")]
     public GameObject equipPrefab;
+    public float addSpeed;
+    public float addJumpPower;
+    public EquipSlotType equipSlotType;
 
-    
+
 
 }

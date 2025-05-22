@@ -13,7 +13,6 @@ public class SlotsUI : MonoBehaviour
         if (PlayerManager.Instance?.Player != null)
             PlayerManager.Instance.Player.addItem += OnItemAdded;
     }
-
     void OnDisable()
     {
         if (PlayerManager.Instance?.Player != null)

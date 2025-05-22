@@ -7,9 +7,11 @@ public class Player : MonoBehaviour
 {
     public PlayerController controller;
     public PlayerCondition condition;
+    public PlayerEquipment equipment;
 
 
     public Action<ItemData> addItem;
+    public Action<ItemData> addEquipItem;
 
     public Transform dropPosition;
 
@@ -18,10 +20,19 @@ public class Player : MonoBehaviour
         PlayerManager.Instance.Player = this;
         controller = GetComponent<PlayerController>();
         condition = GetComponent<PlayerCondition>();
+        equipment = GetComponent<PlayerEquipment>();
     }
     public void AddItem(ItemData data)
     {
-        addItem?.Invoke(data);
+        if (data.type == ItemType.Consumable)
+        {
+            addItem?.Invoke(data); // 기존 소비형 인벤토리
+        }
+        else if (data.type == ItemType.Equipable)
+        {
+            addEquipItem?.Invoke(data); // 새로 추가할 델리게이트
+        }
+
     }
 
 }

@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public LayerMask groundLayerMask;
 
+    private float baseSpeed;
+    private float baseJump;
+
     [Header("방향")]
     public Transform cameraContainer;
     [SerializeField] private Camera playerCamera;
@@ -38,7 +41,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float climbingSpeed;
     [SerializeField] private LayerMask climbable;
 
-    public event Action onInventoryToggle;
+    [Header("장비 인벤토리 UI")]
+    public EInventoryUI equipUI;        
+    private bool isEquipUIOpen = false;
+
+ 
 
     // PlayerInput 컴포넌트 참조
     private PlayerInput playerInput;
@@ -52,6 +59,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        baseSpeed = movSpeed;
+        baseJump = JumpPower;
     }
 
     private void OnEnable()
@@ -122,8 +131,17 @@ public class PlayerController : MonoBehaviour
     // Inventory 입력 처리
     private void OnInventory(InputAction.CallbackContext ctx)
     {
-        onInventoryToggle?.Invoke();
-        ToggleCursor();
+       isEquipUIOpen = !isEquipUIOpen;
+        equipUI.Toggle(isEquipUIOpen);
+
+        // 마우스 회전 제어
+        canLook = !isEquipUIOpen;
+
+        // 커서 보이기/숨기기
+        Cursor.visible = isEquipUIOpen;
+        Cursor.lockState = isEquipUIOpen
+                              ? CursorLockMode.None
+                              : CursorLockMode.Locked;
     }
     private void OnZoom(InputAction.CallbackContext ctx)
     {
@@ -225,4 +243,15 @@ public class PlayerController : MonoBehaviour
         else
             EnterClimbMode();
     }
+
+    //public void ApplyEquipEffect(ItemData data)
+    //{
+    //    movSpeed = baseSpeed + data.addSpeed;
+    //    JumpPower = baseJump + data.addJumpPower;
+    //}
+    //public void ClearEquipEffect()
+    //{
+    //    movSpeed = baseSpeed;
+    //    JumpPower = baseJump;
+    //}
 }
