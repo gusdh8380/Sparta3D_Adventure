@@ -15,7 +15,7 @@ public class PlayerInteraction : MonoBehaviour
     private IInteractable curInteractable;
 
     public TextMeshProUGUI promptText;
-    private Camera camera;
+    private Camera cam;
 
     private PlayerInput playerInput;
     private void Awake()
@@ -25,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void Start()
     {
-        camera = Camera.main;
+        cam = Camera.main;
     }
     private void OnEnable()
     {
@@ -43,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             lastCheckTime = Time.time;
 
-            Ray ray = camera.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))

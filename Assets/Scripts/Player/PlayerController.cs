@@ -97,8 +97,9 @@ public class PlayerController : MonoBehaviour
     // Jump 입력 처리
     private void OnJump(InputAction.CallbackContext ctx)
     {
-        if (IsGrounded())
+        if (IsGrounded() && PlayerManager.Instance.player.condition.stamina.curValue > 10 )
         {
+            PlayerManager.Instance.player.condition.UseStamina(10);
             rb.AddForce(Vector2.up * JumpPower, ForceMode.Impulse);
         }
     }
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour
         };
 
         foreach (var ray in rays)
-            if (Physics.Raycast(ray, 2f, groundLayerMask))
+            if (Physics.Raycast(ray, 1.5f, groundLayerMask))
                 return true;
 
         return false;
