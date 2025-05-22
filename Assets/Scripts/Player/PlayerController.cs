@@ -27,10 +27,16 @@ public class PlayerController : MonoBehaviour
     private bool canLook = true;
 
     [Header("카메라 전환")]
-    private bool isFirstPerson = false;
+    public bool isFirstPerson = false;
     // 시점 위치
     [SerializeField] private Vector3 thirdPersonOffset = new Vector3(0, 2, -4);
     [SerializeField] private Vector3 firstPersonOffset = new Vector3(0, 1.6f, 0.2f);
+
+
+    [Header("벽타기")]
+    public bool isClimbing = false;
+    [SerializeField] private float climbingSpeed;
+    [SerializeField] private LayerMask climbable;
 
     public event Action onInventoryToggle;
 
@@ -76,7 +82,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (isClimbing)
+            ClimbMove();
+        else
+            Move();
     }
 
     private void LateUpdate()
@@ -137,6 +146,29 @@ public class PlayerController : MonoBehaviour
         dir.y = rb.velocity.y;
         rb.velocity = dir;
     }
+    private void ClimbMove()
+    {
+        Vector3 dir = new Vector3(curMovementInput.x, curMovementInput.y, 0);
+        rb.velocity = dir * climbingSpeed;
+
+        // 바닥 근처에서 벽 감지 안 되면 자동 해제
+        Vector3 bottom = transform.position + Vector3.down * 0.9f;
+        if (!Physics.Raycast(bottom, transform.forward, 1f, climbable))
+        {
+            ExitClimbMode();
+        }
+    }
+    public void EnterClimbMode()
+    {
+        isClimbing = true;
+        rb.useGravity = false;
+    }
+
+    public void ExitClimbMode()
+    {
+        isClimbing = false;
+        rb.useGravity = true;
+    }
 
     private void CameraLook()
     {
@@ -187,5 +219,12 @@ public class PlayerController : MonoBehaviour
 
         Vector3 targetOffset = isFirstPerson ? firstPersonOffset : thirdPersonOffset;
         playerCamera.transform.localPosition = targetOffset;
+    }
+    public void ToggleClimbMode()
+    {
+        if (isClimbing)
+            ExitClimbMode();
+        else
+            EnterClimbMode();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.HID;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerInteraction : MonoBehaviour
     private float lastCheckTime;
     public float maxCheckDistance;
     public LayerMask layerMask;
+    public LayerMask layerMask1;
 
     public GameObject curInteractGameObject;
     private IInteractable curInteractable;
@@ -18,14 +20,14 @@ public class PlayerInteraction : MonoBehaviour
     private Camera cam;
 
     private PlayerInput playerInput;
+
+    
+   
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
-    }
-
-    void Start()
-    {
         cam = Camera.main;
+       
     }
     private void OnEnable()
     {
@@ -39,12 +41,26 @@ public class PlayerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+            //아이템 상호작용 레이캐스트
+            ItemInteractRay();
+
+            //벽타기 상호작용 레이캐스트
+            //ClimbingIntercatRay();
+    }
+    private void ItemInteractRay()
+    {
+        PlayerController c = PlayerManager.Instance.Player.controller;
         if (Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
 
+            Vector3 originBottom = transform.position + Vector3.down * 0.5f;
+
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
+            Ray ray1 = new Ray(originBottom,transform.forward);
+
             RaycastHit hit;
+            RaycastHit hit1;
 
             if (Physics.Raycast(ray, out hit, maxCheckDistance, layerMask))
             {
@@ -52,6 +68,16 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     curInteractGameObject = hit.collider.gameObject;
                     curInteractable = hit.collider.GetComponent<IInteractable>();
+                    SetPromptText();
+                }
+            }
+            else if (Physics.Raycast(ray1, out hit1, 0.8f, layerMask1) && !c.isClimbing)
+            {
+                ClimbingPlatform climbTarget = hit1.collider.GetComponent<ClimbingPlatform>();
+                if (climbTarget != null)
+                {
+                    curInteractGameObject = hit1.collider.gameObject;
+                    curInteractable = hit1.collider.GetComponent<IInteractable>();
                     SetPromptText();
                 }
             }
@@ -72,6 +98,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public void OnInteractInput(InputAction.CallbackContext context)
     {
+        PlayerController c = PlayerManager.Instance.Player.controller;
         if (curInteractable != null)
         {
             curInteractable.OnInteract();
@@ -79,6 +106,15 @@ public class PlayerInteraction : MonoBehaviour
             curInteractable = null;
             promptText.gameObject.SetActive(false);
         }
+        if (curInteractable != null && c.isClimbing)
+        {
+            c.ToggleClimbMode();
+            curInteractGameObject = null;
+            curInteractable = null;
+            promptText.gameObject.SetActive(false);
+            return;
+        }
     }
+
 
 }
