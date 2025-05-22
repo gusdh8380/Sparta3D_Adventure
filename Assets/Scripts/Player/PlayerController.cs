@@ -26,6 +26,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 mouseDelta;
     private bool canLook = true;
 
+    [Header("카메라 전환")]
+    private bool isFirstPerson = false;
+    // 시점 위치
+    [SerializeField] private Vector3 thirdPersonOffset = new Vector3(0, 2, -4);
+    [SerializeField] private Vector3 firstPersonOffset = new Vector3(0, 1.6f, 0.2f);
+
     public event Action onInventoryToggle;
 
     // PlayerInput 컴포넌트 참조
@@ -54,6 +60,8 @@ public class PlayerController : MonoBehaviour
         // Inventory 액션
         playerInput.actions["Inventory"].started += OnInventory;
         playerInput.actions["Zoom"].performed += OnZoom;
+        //시점 전환 액션
+        playerInput.actions["ViewToggle"].started += OnViewToggle;
     }
 
     private void OnDisable()
@@ -118,6 +126,10 @@ public class PlayerController : MonoBehaviour
         float newFOV = playerCamera.fieldOfView - scrollY * zoomSensitivity;
         playerCamera.fieldOfView = Mathf.Clamp(newFOV, minFOV, maxFOV);
     }
+    private void OnViewToggle(InputAction.CallbackContext ctx)
+    {
+        SwitchView();
+    }
 
     private void Move()
     {
@@ -168,5 +180,12 @@ public class PlayerController : MonoBehaviour
         movSpeed += a;
         yield return  new WaitForSeconds(d);
         movSpeed -= a;
+    }
+    private void SwitchView()
+    {
+        isFirstPerson = !isFirstPerson;
+
+        Vector3 targetOffset = isFirstPerson ? firstPersonOffset : thirdPersonOffset;
+        playerCamera.transform.localPosition = targetOffset;
     }
 }
