@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StaminaObject
   m_EditorClassIdentifier: 
   displayName: "\uD65C\uB825\uC758 \uAD6C\uC2AC"
-  description: "\uD65C\uB82C\uC744 \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
+  description: "\uD65C\uB825\uC744 \uD68C\uBCF5\uC2DC\uD0B5\uB2C8\uB2E4."
   type: 2
   coolTime: 6
   icon: {fileID: 21300000, guid: 43046426625693b41b1c2ee199d4c15a, type: 3}
