@@ -13,13 +13,6 @@ public class DamageIndicater : MonoBehaviour
     {
         PlayerManager.Instance.Player.condition.onTakeDamage += Flash;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void Flash()
     {
         if ((coroutine != null))

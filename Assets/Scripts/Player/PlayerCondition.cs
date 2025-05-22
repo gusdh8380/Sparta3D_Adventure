@@ -45,6 +45,4 @@ public class PlayerCondition : MonoBehaviour, IDamageable
         stamina.Subtract(a);
         return true;
     }
-
-   
 }

@@ -38,7 +38,6 @@ public class ItemSlot : MonoBehaviour
         iconImage.enabled = true;
         countText.enabled = true;
         countText.text = stackCount.ToString();
-
     }
     public void AddStack(int a)
     {

@@ -16,8 +16,6 @@ public class CampFireHeal : MonoBehaviour
 
     List<PlayerCondition> conditions = new List<PlayerCondition>();
 
-    
-
     private void Update()
     {
         if (healEnabled)
@@ -25,7 +23,6 @@ public class CampFireHeal : MonoBehaviour
             Heal();
             Debug.Log("Ä¡À¯Áß");
         }
-       
     }
 
     void Heal()
@@ -41,8 +38,7 @@ public class CampFireHeal : MonoBehaviour
         {
             conditions.Add(p);
         }
-        healEnabled = true;
-       
+        healEnabled = true; 
     }
 
     private void OnTriggerExit(Collider other)
@@ -53,7 +49,4 @@ public class CampFireHeal : MonoBehaviour
         }
         healEnabled=false;
     }
-
-
-
 }

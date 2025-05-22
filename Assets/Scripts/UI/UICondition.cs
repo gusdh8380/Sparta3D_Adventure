@@ -11,5 +11,4 @@ public class UICondition : MonoBehaviour
     {
         PlayerManager.Instance.Player.condition.uiCondition = this;
     }
-
 }
