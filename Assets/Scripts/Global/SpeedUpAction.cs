@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//아이템 효과 - 스피드 업
 [CreateAssetMenu(menuName = "Items/Actions/SpeedUp")]
 public class SpeedUpAction : ScriptableObject, IItemAction
 {

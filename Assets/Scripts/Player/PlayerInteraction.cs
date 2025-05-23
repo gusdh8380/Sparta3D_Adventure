@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 
+//플레이어 상호작용 담당
 public class PlayerInteraction : MonoBehaviour
 {
     public float checkRate = 0.05f;
@@ -32,12 +33,11 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
             //아이템 상호작용 레이캐스트
-            ItemInteractRay();
+            InteractRay();
 
-            //벽타기 상호작용 레이캐스트
-            //ClimbingIntercatRay();
     }
-    private void ItemInteractRay()
+
+    private void InteractRay()
     {
         PlayerController c = PlayerManager.Instance.Player.controller;
         if (Time.time - lastCheckTime > checkRate)
@@ -46,6 +46,7 @@ public class PlayerInteraction : MonoBehaviour
 
             Vector3 originBottom = transform.position + Vector3.down * 0.8f;
 
+            //레이캐스트를 2개 -> 벽타기 상호작용과 아이템 상호작용 분리 처리
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             Ray ray1 = new Ray(originBottom,transform.forward);
 
@@ -79,13 +80,14 @@ public class PlayerInteraction : MonoBehaviour
             }
         }
     }
-
+    //상호작용 전 대상 정보 출력
     private void SetPromptText()
     {
         promptText.gameObject.SetActive(true);
         promptText.text = curInteractable.GetInteractPrompt();
     }
 
+    //상호작용 키 입력 시
     public void TryInteract()
     {
         PlayerController c = PlayerManager.Instance.Player.controller;

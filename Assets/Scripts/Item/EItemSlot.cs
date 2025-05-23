@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Outline))]
+//장비 아이템 슬룻 UI
 public class EItemSlot : MonoBehaviour, IPointerClickHandler
 {
     [Header("Icon Image")]

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//일반화된 상태 수치 클래스
 public class Condition : MonoBehaviour
 {
     public float curValue;

@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Äü½½·í UI
 public class QuickSlot_Item : MonoBehaviour
 {
     [Header("UI ÄÄÆ÷³ÍÆ®")]

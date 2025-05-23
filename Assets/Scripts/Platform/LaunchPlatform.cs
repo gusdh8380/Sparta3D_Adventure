@@ -60,8 +60,7 @@ public class LaunchPlatform : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         time.text = "น฿ป็!";
-        var pc = targetBody.GetComponent<PlayerController>();
-        pc?.BeginBallistic();
+
         float rad = launchAngle * Mathf.Deg2Rad;
         Vector3 dir = new Vector3(-Mathf.Cos(rad), Mathf.Sin(rad), 0f);
         

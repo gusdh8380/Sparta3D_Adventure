@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//점프대 오브젝트 스크립트
 public class JumpCube : MonoBehaviour
 {
     [SerializeField]

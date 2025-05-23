@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-
+//움직이는 발판
 public class MovePlatform : MonoBehaviour
 {
     [SerializeField]

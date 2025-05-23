@@ -10,6 +10,8 @@ public enum PlayerState
     Climbing
 }
 
+//플레이어 움직임, 시점제어, 등 물리 동작 컨트롤 담당
+
 public class PlayerController : MonoBehaviour
 {
     [Header("이동")]
@@ -122,7 +124,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Inventory 처리
+    // Inventory 입력에 대한 처리(인벤토리 열기)
     public void ToggleInventory()
     {
        isEquipUIOpen = !isEquipUIOpen;
@@ -149,6 +151,8 @@ public class PlayerController : MonoBehaviour
         dir.y = rb.velocity.y;
         rb.velocity = dir;
     }
+
+
     private void ClimbMove(Vector2 input)
     {
         Vector3 dir = new Vector3(input.x, input.y, 0f) * climbingSpeed;
@@ -175,7 +179,8 @@ public class PlayerController : MonoBehaviour
     public void ExitClimbMode()
     {
         rb.useGravity = true;
-        // ledge 위로 올라서기 위한 스냅
+        // 벽? 위로 올라서기 위한코드
+        //이 코드가 없으면 올라가놓고 다시 내려온다..
         rb.AddForce(transform.forward * 3f, ForceMode.VelocityChange);
         // 항상 Normal 상태로 전환 (점프 방지)
         state = PlayerState.Normal;
@@ -199,13 +204,7 @@ public class PlayerController : MonoBehaviour
         return r;
     }
 
-    private void ToggleCursor()
-    {
-        bool unlocked = (Cursor.lockState == CursorLockMode.None);
-        Cursor.lockState = unlocked ? CursorLockMode.Locked : CursorLockMode.None;
-        canLook = unlocked;
-    }
-
+    //스피드아이템 사용시 이동속도 증가
     public void ApplySpeedUp(float a,float d)
     {
         StartCoroutine(SpeedUpCoroutine(a,d));
@@ -216,6 +215,7 @@ public class PlayerController : MonoBehaviour
         yield return  new WaitForSeconds(d);
         movSpeed -= a;
     }
+    //시점 변환
     public void SwitchView()
     {
         isFirstPerson = !isFirstPerson;
@@ -223,21 +223,13 @@ public class PlayerController : MonoBehaviour
         Vector3 targetOffset = isFirstPerson ? firstPersonOffset : thirdPersonOffset;
         playerCamera.transform.localPosition = targetOffset;
     }
+
+    //벽타기 상호작용 시 호출.
     public void ToggleClimbMode()
     {
         if (PlayerState.Climbing == state)
             ExitClimbMode();
         else
             EnterClimbMode();
-    }
-
-    public void BeginBallistic()
-    {
-        state = PlayerState.Jumping;
-
-    }
-    public void EndBallistic()
-    {
-        state = PlayerState.Normal;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+//퀵슬룻(소비형아이템)UI 관리
 public class QuickSlotsUI : MonoBehaviour
 {
     [Header("UI 슬롯 4개를 할당")]

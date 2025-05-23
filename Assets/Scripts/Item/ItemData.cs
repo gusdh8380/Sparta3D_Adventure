@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+//아이템 데이터 구조
 public enum ItemType
 {
     Resource,
@@ -41,7 +42,4 @@ public class ItemData : ScriptableObject
     public float addSpeed;
     public float addJumpPower;
     public EquipSlotType equipSlotType;
-
-
-
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//장착 가능한 아이템(장비)의 인벤토리UI 관리
 public class EInventoryUI : MonoBehaviour
 {
     [Header("Root Panel")]

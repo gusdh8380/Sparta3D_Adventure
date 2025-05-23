@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
+//플레이어 아이템 장착 관리
 
-[RequireComponent(typeof(PlayerController))]
 public class PlayerEquipment : MonoBehaviour
 {
     public Transform headMount;
