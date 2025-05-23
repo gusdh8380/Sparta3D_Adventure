@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,6 +18,10 @@ public class EInventoryUI : MonoBehaviour
     [Header("¹öÆ°")]
     public Button equipButton;
     public Button unequipButton;
+
+    [Header("InfoText")]
+    public TextMeshProUGUI EitemName;
+    public TextMeshProUGUI EitemDescription;
 
     private EItemSlot selectedSlot;
     private EItemSlot selectedEquippedSlot;
@@ -70,23 +75,46 @@ public class EInventoryUI : MonoBehaviour
 
     public void SelectSlot(EItemSlot slot)
     {
+        if (selectedSlot != null && selectedSlot != slot)
+        {
+            selectedSlot.outline.enabled = false;
+        }
+        if(selectedEquippedSlot != null && selectedEquippedSlot != slot)
+        {
+            selectedEquippedSlot.outline.enabled = false;
+        }
+
         if (inventorySlots.Contains(slot))
         {
             selectedSlot = slot;
             selectedEquippedSlot = null;
+            EitemName.text = slot.itemData.name;
+            EitemDescription.text  = slot.itemData.description;
             equipButton.gameObject.SetActive(slot.HasItem && equippedSlots.Exists(s => s.IsEmpty));
             unequipButton.gameObject.SetActive(false);
+        }
+        else if(equippedSlots.Contains(slot))
+        {
+            selectedEquippedSlot = slot;
+            selectedSlot = null;
+            EitemName.text = slot.itemData.name;
+            EitemDescription.text = slot.itemData.description;
+            equipButton.gameObject.SetActive(false);
+            unequipButton.gameObject.SetActive(slot.HasItem);
         }
         else
         {
             selectedEquippedSlot = slot;
             selectedSlot = null;
+            EitemName.text = null;
+            EitemDescription.text = null;
             equipButton.gameObject.SetActive(false);
             unequipButton.gameObject.SetActive(slot.HasItem);
         }
     }
+    
 
-    private void OnEquipPressed()
+private void OnEquipPressed()
     {
         if (selectedSlot == null || selectedSlot.IsEmpty) return;
 
