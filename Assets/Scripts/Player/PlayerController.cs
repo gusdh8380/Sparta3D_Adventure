@@ -48,12 +48,12 @@ public class PlayerController : MonoBehaviour
  
 
     // PlayerInput 컴포넌트 참조
-    private PlayerInput playerInput;
+    private PlayerInputHandler inputHandler;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        playerInput = GetComponent<PlayerInput>();
+        inputHandler = GetComponent<PlayerInputHandler>();
     }
 
     private void Start()
@@ -63,63 +63,30 @@ public class PlayerController : MonoBehaviour
         baseJump = JumpPower;
     }
 
-    private void OnEnable()
-    {
-        // Move 액션
-        playerInput.actions["Move"].performed += OnMove;
-        playerInput.actions["Move"].canceled += OnMove;
-        // Look 액션
-        playerInput.actions["Look"].performed += OnLook;
-        // Jump 액션
-        playerInput.actions["Jump"].started += OnJump;
-        // Inventory 액션
-        playerInput.actions["Inventory"].started += OnInventory;
-        playerInput.actions["Zoom"].performed += OnZoom;
-        //시점 전환 액션
-        playerInput.actions["ViewToggle"].started += OnViewToggle;
-    }
 
-    private void OnDisable()
-    {
-        playerInput.actions["Move"].performed -= OnMove;
-        playerInput.actions["Move"].canceled -= OnMove;
-        playerInput.actions["Look"].performed -= OnLook;
-        playerInput.actions["Jump"].started -= OnJump;
-        playerInput.actions["Inventory"].started -= OnInventory;
-        playerInput.actions["Zoom"].performed -= OnZoom;
-    }
 
     private void FixedUpdate()
     {
         if (isClimbing)
-            ClimbMove();
+            ClimbMove(inputHandler.MoveInput);
         else
-            Move();
+            Move(inputHandler.MoveInput);
     }
 
     private void LateUpdate()
     {
         if (canLook)
-            CameraLook();
+            CameraLook(inputHandler.LookInput);
     }
 
-    // Move 입력 처리
-    private void OnMove(InputAction.CallbackContext ctx)
+    // Look  처리
+    private void OnLook(Vector2 input)
     {
-        if (ctx.phase == InputActionPhase.Performed)
-            curMovementInput = ctx.ReadValue<Vector2>();
-        else if (ctx.phase == InputActionPhase.Canceled)
-            curMovementInput = Vector2.zero;
+        mouseDelta = input;
     }
 
-    // Look 입력 처리
-    private void OnLook(InputAction.CallbackContext ctx)
-    {
-        mouseDelta = ctx.ReadValue<Vector2>();
-    }
-
-    // Jump 입력 처리
-    private void OnJump(InputAction.CallbackContext ctx)
+    // Jump 처리
+    public void TryJump()
     {
         if (IsGrounded() && PlayerManager.Instance.player.condition.stamina.curValue > 10 )
         {
@@ -128,8 +95,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Inventory 입력 처리
-    private void OnInventory(InputAction.CallbackContext ctx)
+    // Inventory 처리
+    public void ToggleInventory()
     {
        isEquipUIOpen = !isEquipUIOpen;
         equipUI.Toggle(isEquipUIOpen);
@@ -143,28 +110,21 @@ public class PlayerController : MonoBehaviour
                               ? CursorLockMode.None
                               : CursorLockMode.Locked;
     }
-    private void OnZoom(InputAction.CallbackContext ctx)
+    public void Zoom(float scrollY)
     {
-        // Vector2일 때
-        float scrollY = ctx.ReadValue<Vector2>().y;
-
         float newFOV = playerCamera.fieldOfView - scrollY * zoomSensitivity;
         playerCamera.fieldOfView = Mathf.Clamp(newFOV, minFOV, maxFOV);
     }
-    private void OnViewToggle(InputAction.CallbackContext ctx)
+ 
+    private void Move(Vector2 input)
     {
-        SwitchView();
-    }
-
-    private void Move()
-    {
-        Vector3 dir = (transform.forward * curMovementInput.y + transform.right * curMovementInput.x) * movSpeed;
+        Vector3 dir = (transform.forward * input.y + transform.right * input.x) * movSpeed;
         dir.y = rb.velocity.y;
         rb.velocity = dir;
     }
-    private void ClimbMove()
+    private void ClimbMove(Vector2 input)
     {
-        Vector3 dir = new Vector3(curMovementInput.x, curMovementInput.y, 0);
+        Vector3 dir = new Vector3(input.x, input.y, 0);
         rb.velocity = dir * climbingSpeed;
 
         // 바닥 근처에서 벽 감지 안 되면 자동 해제
@@ -186,12 +146,12 @@ public class PlayerController : MonoBehaviour
         rb.useGravity = true;
     }
 
-    private void CameraLook()
+    private void CameraLook(Vector2 lookInput)
     {
-        camCurXRot += mouseDelta.y * lookSensitivity;
+        camCurXRot += lookInput.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
-        transform.eulerAngles += Vector3.up * (mouseDelta.x * lookSensitivity);
+        transform.eulerAngles += Vector3.up * (lookInput.x * lookSensitivity);
         mouseDelta = Vector2.zero;
     }
 
@@ -229,7 +189,7 @@ public class PlayerController : MonoBehaviour
         yield return  new WaitForSeconds(d);
         movSpeed -= a;
     }
-    private void SwitchView()
+    public void SwitchView()
     {
         isFirstPerson = !isFirstPerson;
 

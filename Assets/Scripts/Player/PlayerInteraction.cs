@@ -19,26 +19,16 @@ public class PlayerInteraction : MonoBehaviour
     public TextMeshProUGUI promptText;
     private Camera cam;
 
-    private PlayerInput playerInput;
+    private PlayerInputHandler inputHandler;
 
     
    
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        inputHandler = GetComponent<PlayerInputHandler>(); 
         cam = Camera.main;
-       
-    }
-    private void OnEnable()
-    {
-        playerInput.actions["Interaction"].started += OnInteractInput;
-    }
-    private void OnDisable()
-    {
-       playerInput.actions["Interaction"].started -= OnInteractInput;
     }
 
-    // Update is called once per frame
     void Update()
     {
             //아이템 상호작용 레이캐스트
@@ -96,7 +86,7 @@ public class PlayerInteraction : MonoBehaviour
         promptText.text = curInteractable.GetInteractPrompt();
     }
 
-    public void OnInteractInput(InputAction.CallbackContext context)
+    public void TryInteract()
     {
         PlayerController c = PlayerManager.Instance.Player.controller;
         if (curInteractable != null)
