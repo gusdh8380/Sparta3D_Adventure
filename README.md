@@ -34,53 +34,7 @@
 ---
 
  ## 📁 폴더 구조 보기
-Scripts/
-├── Player/
-│   ├── Player.cs                  # Player 종합 클래스
-│   ├── PlayerController.cs        # 이동, 시점 등 조작 관련
-│   ├── PlayerInteraction.cs       # 아이템/환경 상호작용
-│   ├── PlayerCondition.cs         # 체력/스태미나 등 상태 관리
-│   ├── PlayerEquipment.cs         # 장비 장착/해제 및 능력치
-│   ├── PlayerInputHandler.cs      # 입력 처리용 핸들러
-│   ├── PlayerManager.cs           # 싱글톤 PlayerManager
-│
-├── Inventory/
-│   ├── InventoryUI.cs             # 인벤토리 UI 통합
-│   ├── QuickSlotUI.cs             # 소비형 아이템 슬롯 UI
-│
-├── Item/
-│   ├── ItemData.cs                # ScriptableObject 아이템 데이터
-│   ├── ItemObject.cs              # 월드 오브젝트
-│
-├── Platform/
-│   ├── ClimbingPlatform.cs        # 클라이밍 오브젝트
-│   ├── JumpPlatform.cs            # 점프대
-│   ├── LaunchPlatform.cs          # 발사대
-│   ├── MovePlatform.cs            # 움직이는 플랫폼
-│
-├── Global/
-│   ├── IDamageable.cs             # 피해 인터페이스
-│   ├── IInteractable.cs           # 상호작용 인터페이스
-│   ├── ItemAction.cs              # 아이템 사용 액션 인터페이스
-│   ├── Singleton.cs               # Manager용 싱글톤 클래스
-│
-├── Actions/
-│   ├── HealthAction.cs            # 체력 회복 아이템 액션
-│   ├── StaminaAction.cs           # 스태미나 회복 액션
-│   ├── SpeedUpAction.cs           # 이동속도 증가 액션
-│
-├── etc/
-│   ├── CampFire.cs                # 모닥불 오브젝트
-│   ├── CampFireHeal.cs           # 근처 회복 스크립트
-│   ├── SceneLoader.cs             # 씬 로더 (미사용 스크립트)
-│
-├── UI/
-│   ├── Condition.cs               # 체력/스태미나 UI 표시
-│   ├── UICondition.cs             # Condition UI 관리자
-│
-└── Slots/
-    ├── ItemSlot.cs                # 장비 슬롯
-    ├── QuickSlotItem.cs           # 소비형 아이템 슬롯
+<pre lang="markdown"><code>```plaintext Scripts/ ├── Player/ │ ├── Player.cs # Player 종합 클래스 │ ├── PlayerController.cs # 이동, 시점 등 조작 관련 │ ├── PlayerInteraction.cs # 아이템/환경 상호작용 │ ├── PlayerCondition.cs # 체력/스태미나 상태 관리 │ ├── PlayerEquipment.cs # 장비 장착 및 능력치 반영 │ ├── PlayerInputHandler.cs # 입력 처리 핸들러 │ └── PlayerManager.cs # 싱글톤 플레이어 관리자 │ ├── Inventory/ │ ├── InventoryUI.cs # 인벤토리 UI 통합 │ └── QuickSlotUI.cs # 소비형 아이템 슬롯 UI │ ├── Item/ │ ├── ItemData.cs # ScriptableObject 아이템 정의 │ └── ItemObject.cs # 월드 아이템 오브젝트 │ ├── Platform/ │ ├── ClimbingPlatform.cs # 벽 클라이밍 │ ├── JumpPlatform.cs # 점프대 │ ├── LaunchPlatform.cs # 발사대 │ └── MovePlatform.cs # 움직이는 플랫폼 │ ├── Global/ │ ├── IDamageable.cs # 피해 인터페이스 │ ├── IInteractable.cs # 상호작용 인터페이스 │ ├── Singleton.cs # 공용 싱글톤 베이스 │ └── ItemAction.cs # 아이템 사용 인터페이스 │ ├── Actions/ │ ├── HealthAction.cs # 체력 회복 │ ├── StaminaAction.cs # 스태미나 회복 │ └── SpeedUpAction.cs # 이동속도 증가 │ ├── etc/ │ ├── CampFire.cs # 모닥불 오브젝트 │ ├── CampFireHeal.cs # 회복 영역 스크립트 │ └── SceneLoader.cs # 씬 전환용 유틸 │ ├── UI/ │ ├── Condition.cs # 체력/스태미나 상태 UI │ └── UICondition.cs # UI 상태 연동 클래스 │ └── Slots/ ├── ItemSlot.cs # 장비 슬롯 └── QuickSlotItem.cs # 소비형 슬롯 ``` </code></pre>
 
 
 
