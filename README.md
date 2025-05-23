@@ -9,6 +9,7 @@
 
 > 시연 영상
 > https://www.youtube.com/watch?v=HGxcBKxGgKo
+
 > 개발 과정 기록
 > [노션 링크](https://www.notion.so/Sparta3D_Adventure-1f9dd79e416180d68c14f155217998b9#1fadd79e416180b291ead3d614af44eb)
 
