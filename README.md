@@ -44,7 +44,7 @@ Scripts/
 │   ├── PlayerCondition.cs      # 체력/스태미나 상태 관리
 │   ├── PlayerEquipment.cs      # 장비 장착/해제 및 능력치
 │   ├── PlayerInputHandler.cs   # 입력 핸들러
-│   └── PlayerManager.cs        # 싱글톤 관리자
+│   └── PlayerManager.cs        # 싱글톤 플레이어 관리자
 │
 ├── Inventory/
 │   ├── InventoryUI.cs          # 인벤토리 UI 통합
@@ -74,7 +74,7 @@ Scripts/
 ├── etc/
 │   ├── CampFire.cs             # 모닥불 오브젝트
 │   ├── CampFireHeal.cs         # 회복 영역 스크립트
-│   └── SceneLoader.cs          # 씬 로딩 유틸
+│   └── SceneLoader.cs          # 씬 로딩 유틸(미사용, 세션 강의 필기용)
 │
 ├── UI/
 │   ├── Condition.cs            # 체력/스태미나 UI
