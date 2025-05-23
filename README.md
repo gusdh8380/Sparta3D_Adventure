@@ -34,7 +34,6 @@
 ---
 
  ## 📁 폴더 구조 보기
-
 Scripts/
 ├── Player/
 │   ├── Player.cs                  # Player 종합 클래스
@@ -59,7 +58,6 @@ Scripts/
 │   ├── LaunchPlatform.cs          # 발사대
 │   ├── MovePlatform.cs            # 움직이는 플랫폼
 │
-
 ├── Global/
 │   ├── IDamageable.cs             # 피해 인터페이스
 │   ├── IInteractable.cs           # 상호작용 인터페이스
@@ -83,6 +81,7 @@ Scripts/
 └── Slots/
     ├── ItemSlot.cs                # 장비 슬롯
     ├── QuickSlotItem.cs           # 소비형 아이템 슬롯
+
 
 
 ## 🛠️ Self Feedback
