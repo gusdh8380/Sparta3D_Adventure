@@ -33,7 +33,7 @@
 - 장비 아이템 구면 및 장착 기능
 ---
 
-<details> <summary> ## 📁 폴더 구조 보기</summary> 
+ ## 📁 폴더 구조 보기
 
 Scripts/
 ├── Player/
@@ -59,6 +59,7 @@ Scripts/
 │   ├── LaunchPlatform.cs          # 발사대
 │   ├── MovePlatform.cs            # 움직이는 플랫폼
 │
+
 ├── Global/
 │   ├── IDamageable.cs             # 피해 인터페이스
 │   ├── IInteractable.cs           # 상호작용 인터페이스
@@ -82,7 +83,8 @@ Scripts/
 └── Slots/
     ├── ItemSlot.cs                # 장비 슬롯
     ├── QuickSlotItem.cs           # 소비형 아이템 슬롯
-</details>
+
+
 ## 🛠️ Self Feedback
 - 예외 처리 및 방어적 코드 부족함
 - 구조가 커지면서 각 기능이 서로 얽히는 느낌이 생겼고, 특히 PlayerController가 역할이 많아지면서 의존성이 커졌다.
