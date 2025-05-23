@@ -569,6 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   condition: {fileID: 0}
+  equipment: {fileID: 0}
   dropPosition: {fileID: 1459262798}
 --- !u!114 &176419511
 MonoBehaviour:
@@ -7990,7 +7991,7 @@ GameObject:
   - component: {fileID: 1818958830}
   - component: {fileID: 1818958829}
   m_Layer: 0
-  m_Name: UIActiveInventory
+  m_Name: QickUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8459,8 +8460,6 @@ MonoBehaviour:
   - {fileID: 1227279875}
   equipButton: {fileID: 1449664784}
   unequipButton: {fileID: 1645872534}
-  ItemName: {fileID: 2033500737}
-  ItemDescription: {fileID: 1269844090}
 --- !u!1 &1929287631
 GameObject:
   m_ObjectHideFlags: 0

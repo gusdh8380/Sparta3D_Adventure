@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour
+public class QuickSlot_Item : MonoBehaviour
 {
     [Header("UI ÄÄÆ÷³ÍÆ®")]
     public Image iconImage;

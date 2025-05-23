@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SlotsUI : MonoBehaviour
+public class QuickSlotsUI : MonoBehaviour
 {
     [Header("UI 슬롯 4개를 할당")]
-    public List<ItemSlot> slots;
+    public List<QuickSlot_Item> slots;
+
+   // public InventoryManager inventoryManager;
 
     void OnEnable()
     {
