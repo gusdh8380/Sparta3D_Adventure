@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//플레이어의 상태 수치 관리
 public class PlayerCondition : MonoBehaviour, IDamageable
 {
     public UICondition uiCondition;
