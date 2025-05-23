@@ -3,6 +3,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerState
+{
+    Normal,
+    Jumping,
+    Climbing
+}
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +21,9 @@ public class PlayerController : MonoBehaviour
 
     private float baseSpeed;
     private float baseJump;
+
+    [Header("상태")]
+    public PlayerState state = PlayerState.Normal;
 
     [Header("방향")]
     public Transform cameraContainer;
@@ -37,7 +46,6 @@ public class PlayerController : MonoBehaviour
 
 
     [Header("벽타기")]
-    public bool isClimbing = false;
     [SerializeField] private float climbingSpeed;
     [SerializeField] private LayerMask climbable;
 
@@ -45,10 +53,12 @@ public class PlayerController : MonoBehaviour
     public EInventoryUI equipUI;        
     private bool isEquipUIOpen = false;
 
- 
+    private bool isLaunched = false;
 
     // PlayerInput 컴포넌트 참조
     private PlayerInputHandler inputHandler;
+
+    public Transform bodyBottom;
 
     private void Awake()
     {
@@ -67,10 +77,23 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isClimbing)
+        // 클라이밍 우선 처리
+        if (state == PlayerState.Climbing)
+        {
             ClimbMove(inputHandler.MoveInput);
-        else
+            return;
+        }
+        // 지면 감지: 바닥이면 Normal, 아니면 Jumping
+        if (IsGrounded())
+        {
+            state = PlayerState.Normal;
             Move(inputHandler.MoveInput);
+        }
+        else
+        {
+            state = PlayerState.Jumping;
+            // 공중에서는 이동 입력 무시
+        }
     }
 
     private void LateUpdate()
@@ -88,10 +111,14 @@ public class PlayerController : MonoBehaviour
     // Jump 처리
     public void TryJump()
     {
+        if (state != PlayerState.Normal) return;
         if (IsGrounded() && PlayerManager.Instance.player.condition.stamina.curValue > 10 )
         {
             PlayerManager.Instance.player.condition.UseStamina(10);
+
+            state = PlayerState.Jumping;
             rb.AddForce(Vector2.up * JumpPower, ForceMode.Impulse);
+            
         }
     }
 
@@ -124,29 +151,38 @@ public class PlayerController : MonoBehaviour
     }
     private void ClimbMove(Vector2 input)
     {
-        Vector3 dir = new Vector3(input.x, input.y, 0);
-        rb.velocity = dir * climbingSpeed;
+        Vector3 dir = new Vector3(input.x, input.y, 0f) * climbingSpeed;
+        rb.velocity = dir;
 
-        // 바닥 근처에서 벽 감지 안 되면 자동 해제
-        Vector3 bottom = transform.position + Vector3.down * 0.9f;
-        if (!Physics.Raycast(bottom, transform.forward, 1f, climbable))
+        // 벽 꼭대기 및 바닥 감지
+        Vector3 bottom = bodyBottom.transform.position + Vector3.down * 1f;
+        
+        bool hitBelow = Physics.Raycast(bottom, transform.forward, 1f, climbable);
+        Debug.DrawRay(bottom, transform.forward, Color.yellow);
+        
+        if (!hitBelow)
         {
             ExitClimbMode();
         }
+
     }
     public void EnterClimbMode()
     {
-        isClimbing = true;
+        state = PlayerState.Climbing;
         rb.useGravity = false;
     }
 
     public void ExitClimbMode()
     {
-        isClimbing = false;
         rb.useGravity = true;
+        // ledge 위로 올라서기 위한 스냅
+        rb.AddForce(transform.forward * 3f, ForceMode.VelocityChange);
+        // 항상 Normal 상태로 전환 (점프 방지)
+        state = PlayerState.Normal;
     }
 
-    private void CameraLook(Vector2 lookInput)
+
+        private void CameraLook(Vector2 lookInput)
     {
         camCurXRot += lookInput.y * lookSensitivity;
         camCurXRot = Mathf.Clamp(camCurXRot, minXLook, maxXLook);
@@ -157,19 +193,10 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        Ray[] rays = new Ray[4]
-        {
-            new Ray(transform.position + transform.forward * 0.2f + transform.up * 0.01f, Vector3.down),
-            new Ray(transform.position - transform.forward * 0.2f + transform.up * 0.01f, Vector3.down),
-            new Ray(transform.position + transform.right   * 0.2f + transform.up * 0.01f, Vector3.down),
-            new Ray(transform.position - transform.right   * 0.2f + transform.up * 0.01f, Vector3.down)
-        };
-
-        foreach (var ray in rays)
-            if (Physics.Raycast(ray, 1.5f, groundLayerMask))
-                return true;
-
-        return false;
+        Vector3 origin = bodyBottom != null ? bodyBottom.position : (transform.position + Vector3.up * 0.1f);
+        bool r = Physics.Raycast(origin, Vector3.down, 1.1f, groundLayerMask);
+        Debug.DrawRay(origin, Vector3.down, Color.yellow);
+        return r;
     }
 
     private void ToggleCursor()
@@ -198,20 +225,19 @@ public class PlayerController : MonoBehaviour
     }
     public void ToggleClimbMode()
     {
-        if (isClimbing)
+        if (PlayerState.Climbing == state)
             ExitClimbMode();
         else
             EnterClimbMode();
     }
 
-    //public void ApplyEquipEffect(ItemData data)
-    //{
-    //    movSpeed = baseSpeed + data.addSpeed;
-    //    JumpPower = baseJump + data.addJumpPower;
-    //}
-    //public void ClearEquipEffect()
-    //{
-    //    movSpeed = baseSpeed;
-    //    JumpPower = baseJump;
-    //}
+    public void BeginBallistic()
+    {
+        state = PlayerState.Jumping;
+
+    }
+    public void EndBallistic()
+    {
+        state = PlayerState.Normal;
+    }
 }

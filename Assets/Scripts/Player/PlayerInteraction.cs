@@ -44,7 +44,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             lastCheckTime = Time.time;
 
-            Vector3 originBottom = transform.position + Vector3.down * 0.5f;
+            Vector3 originBottom = transform.position + Vector3.down * 0.8f;
 
             Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2));
             Ray ray1 = new Ray(originBottom,transform.forward);
@@ -61,7 +61,7 @@ public class PlayerInteraction : MonoBehaviour
                     SetPromptText();
                 }
             }
-            else if (Physics.Raycast(ray1, out hit1, 0.8f, layerMask1) && !c.isClimbing)
+            else if (Physics.Raycast(ray1, out hit1, 0.8f, layerMask1) && PlayerState.Climbing != c.state)
             {
                 ClimbingPlatform climbTarget = hit1.collider.GetComponent<ClimbingPlatform>();
                 if (climbTarget != null)
@@ -96,7 +96,7 @@ public class PlayerInteraction : MonoBehaviour
             curInteractable = null;
             promptText.gameObject.SetActive(false);
         }
-        if (curInteractable != null && c.isClimbing)
+        if (curInteractable != null && PlayerState.Climbing==c.state)
         {
             c.ToggleClimbMode();
             curInteractGameObject = null;
