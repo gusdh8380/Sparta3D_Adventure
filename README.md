@@ -1,17 +1,17 @@
 # 🎮 Sparta3D_Adventure
 
-> 유니티 3D 게임 개인 프로젝트
-> 3d게임의 여러가지 요소를 구현
+- 유니티 3D 게임 개인 프로젝트
+- 3d게임의 여러가지 요소를 구현
 
 ---
 
 ## 📽️ 데모
 
-> 시연 영상
-> https://www.youtube.com/watch?v=HGxcBKxGgKo
+- 시연 영상
+- https://www.youtube.com/watch?v=HGxcBKxGgKo
 
-> 개발 과정 기록
-> [노션 링크](https://www.notion.so/Sparta3D_Adventure-1f9dd79e416180d68c14f155217998b9#1fadd79e416180b291ead3d614af44eb)
+- 개발 과정 기록
+- [노션 링크](https://www.notion.so/Sparta3D_Adventure-1f9dd79e416180d68c14f155217998b9#1fadd79e416180b291ead3d614af44eb)
 
 ---
 
@@ -92,8 +92,12 @@ Scripts/
 - 구조가 커지면서 각 기능이 서로 얽히는 느낌이 생겼고, 특히 PlayerController가 역할이 많아지면서 의존성이 커졌다.
 - 인벤토리, 아이템 사용, 아이템 장착 코드가 동작은하지만 설계적으로 문제가 있어보인다.
 - Unity 컴포넌트(들)에 대한 이해가 부족하다
-- 싱글톤 클래스를 따로 만들어서 상속해보았다.
 
 
+## 🛠️ Feedback Analysis Summary
+1. 소프트웨어 아키텍처 설계 능력 : 명확하고 깔끔한 클래스 분리르 시도하였지만, 역할이 명확이 분리된 아키텍처를 완성하지 못하였다.
+2. 이벤트 기반 시스템 구성 능력 : 시스템 전반에 일관적인 적용하는 능력을 키워야 할 것 같다.
+3. 데이터 - UI 분리 및 데이터 중심 설계 역량 : 현재 UI 오브젝트가 곧 데이터 저장소 역함을 겸하고 있음, 이를 분리하여 확장성을 확보할 필요가 있어보임
+4. 컴포넌트 통신과 의존성 관리 : FindObjectOfType, Singleton의 의존성을 줄이고 컴포넌트 참조를 명시적으로 관리해야
 
     
